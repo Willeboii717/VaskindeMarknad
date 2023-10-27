@@ -14,7 +14,7 @@ import { checkIfUserExists } from "../controllers/CustomerController";
 
 
 // GET: Retrieve a list of all customers
-router.get('/customers', async (req, res) => {
+router.get('/getCustomers', async (req, res) => {
   const query = await executeQuery("SELECT * FROM customers");
 
   const Customer:Customer[] = query;

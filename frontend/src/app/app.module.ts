@@ -13,6 +13,7 @@ import { BookComponent } from './pages/book/book.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './partials/footer/footer.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { RegisterComponent } from './pages/register/register.component';
     HomeComponent,
     FooterComponent,
     RegisterComponent,
+    NotFoundComponent,
 
   ],
 
