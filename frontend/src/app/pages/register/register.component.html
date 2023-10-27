@@ -1,0 +1,25 @@
+<app-header></app-header>
+<h1 class="title">Register</h1>
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <div class="background">
+        <label for="username">Username: </label>
+        <input id="username" type="text" formControlName="username">
+
+        <label for="email">Email: </label>
+        <input id="email" type="text" formControlName="email">
+
+        <label for="firstname">First name: </label>
+        <input id="firstname" type="text" formControlName="firstname">
+
+        <label for="lastname">Last Name: </label>
+        <input id="lastname" type="text" formControlName="lastname">
+
+        <label for="password">Password: </label>
+        <input id="password" type="text" formControlName="password">
+    
+        <label for="confirmPassword">Confirm Password: </label>
+        <input id="confirmPassword" type="text" formControlName="confirmPassword">
+
+        <button type="submit" class="submitButtom" [disabled]="!registrationForm.valid">Register</button>
+    </div>
+</form>

@@ -1,0 +1,18 @@
+.test {
+    justify-self: end;
+}
+.footerGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    border-top: solid 1px black;
+    justify-items: center;
+    align-items: center;
+
+
+}
+
+p {
+    border-top: solid black 1px;
+    text-align: center;
+}

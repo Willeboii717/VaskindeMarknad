@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
+
+*{
+    box-sizing: border-box;
+}
+
+html{
+    background-color: rgb(226, 218, 218);
+    height: 100vh;
+}
+
+body{
+    margin: 0;
+    font-family: "Merriweather", sans-serif;
+    font-size: 18px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a{
+    text-decoration: none;
+}

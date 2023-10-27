@@ -1,0 +1,48 @@
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-items: center;
+    margin: 10px;
+    text-align: center;
+
+}
+.background {
+    width: min-content;
+    background-color: lightgray;
+    border-radius: 1em;
+    border: solid 0.5px black;
+}
+  label {
+    font-weight: bold;
+  }
+  
+  input {
+    padding: 5px;
+    border-radius: 10em;
+    width: 200px;
+    border: none;
+    margin-top: 5px; /* Add some vertical spacing between inputs */
+  }
+  
+  button {
+    background: gray;
+    color: whitesmoke;
+    font-weight: bold;
+    border-radius: 1.5em;
+    height: 3em;
+    width: 7em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    opacity: 0.7;
+  }
+  
+button:hover {
+    opacity: 1;
+}
+  
