@@ -10,6 +10,8 @@ import { Customer } from '../../interfaces/customer';
 export class LoginComponent implements OnInit {
   customers: Customer[] = []; // Use Customer type
 
+  visible: boolean = false;
+
   constructor(private CustomersService: CustomersService) {}
 
   ngOnInit(): void {
