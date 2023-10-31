@@ -1,8 +1,8 @@
-//Angular
-import { Component } from '@angular/core';
+//Angular Imports
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validator } from '@angular/forms';
 
-//Project
+//Project Imports
 import { Customer } from 'src/app/interfaces/customer';
 import { CustomersService } from '../../services/customersService'
 
@@ -13,14 +13,16 @@ import { CustomersService } from '../../services/customersService'
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registrationForm!: FormGroup;
 
   constructor(
     private CustomersService: CustomersService,
     private formBuilder: FormBuilder,
-  ) 
+    ) 
   {
+  }
+  ngOnInit(): void {
     this.createForm();
   }
 
