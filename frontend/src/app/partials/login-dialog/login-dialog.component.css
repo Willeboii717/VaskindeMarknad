@@ -1,34 +1,25 @@
-@import "primeng/resources/themes/lara-light-blue/theme.css";
 
-* {
-    font-size: larger;
-}
 
-.text {
+.title {
     font-size: 250%;
     text-align: center;
     color: black;
     padding-bottom: 0.5em;
 }
 
-.container {
+
+form {
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
-    color: darkgrey;
+    align-items: center;
 }
 
-.container > label {
-    align-self: center;
-    padding: 0.5em;
-}
-
-
-
-:host ::ng-deep .p-button {
-    background-color: lightgrey;
-    color: black;
-}
+input {
+    height: 30px;
+    border-radius: 20px;
+    margin-bottom: 0.5em;
+    box-sizing: border-box;
+  }
 
 .buttonFlex {
     display: flex;

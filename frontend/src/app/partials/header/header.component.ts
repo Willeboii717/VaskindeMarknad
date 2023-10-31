@@ -1,4 +1,8 @@
+//Angular Imports
 import { Component } from '@angular/core';
+
+//Project Imports
+import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { Customer } from 'src/app/interfaces/customer';
 
 
@@ -9,6 +13,20 @@ import { Customer } from 'src/app/interfaces/customer';
   
 })
 export class HeaderComponent { 
-  isLoggedIn: boolean = false;
 
+  constructor(LoginDialogComponent:LoginDialogComponent) {
+
+  }
+  pressedButton: boolean = false;
+
+  showDialog: boolean = false;
+
+
+  showLogInDialog() {
+    console.log(LoginDialogComponent.getDialogStatus); //Fuck, fix this, call it good
+    
+    this.showDialog = true;
+    console.log("Pressed", this.showDialog);
+    
+  }
 }

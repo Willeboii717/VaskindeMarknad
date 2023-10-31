@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
 
 //Project
 import { AppRoutingModule } from './app-routing.module';
@@ -47,6 +49,8 @@ import { LoginDialogComponent } from './partials/login-dialog/login-dialog.compo
     DialogModule,
     ButtonModule,
     StyleClassModule,
+    InputTextModule,
+    PasswordModule
   ],
   providers: [],
   bootstrap: [AppComponent]

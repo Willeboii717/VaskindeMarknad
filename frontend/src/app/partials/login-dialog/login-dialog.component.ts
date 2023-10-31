@@ -26,14 +26,19 @@ export class LoginDialogComponent implements OnInit {
   private createLoginForm() {
     this.loginForm = this.formBuilder.group({
       username: new FormControl(''),
-      password: new FormControl(''),
+      password: new FormControl('')
     });
   }
 
 
   visible: boolean = false;
+  getDialogStatus() {
+    return this.visible
+  }
 
-  showDialog() {
-      this.visible = true;
+  sendToConsole() {
+    const loginData: String[] = this.loginForm.value;
+    console.log(loginData);
+    
   }
 }

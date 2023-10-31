@@ -4,23 +4,27 @@
 [modal]="true"
 [style]="{width: '50vw'}
 ">
-    <div class="text">
+    <div class="title">
         Logga In
     </div>
-    <div class="container">
-        <label for="username">Username: </label>
-        <input id="username" type="text" formControlName="username">
-
-        <label for="password">Password: </label>
-        <input id="password" type="text" formControlName="password">
-        <div class="buttonFlex">
-            <p-button 
-            label="Logga In" 
-            type="submit" 
-            class="submitButtom">
-            
-            </p-button>
-        </div>
-    </div>
+        <form [formGroup]="loginForm" (ngSubmit)="sendToConsole()">
+                <label>Username:</label>
+                <input
+                    type="text" 
+                    pInputText
+                    formControlName="username"
+                />
+                <label>Password:</label>
+                    <input
+                        type="password"
+                        pInputText
+                        formControlName="password"
+                    />
+            <div class="buttonFlex">
+                <p-button 
+                    label="Logga In" 
+                    type="submit" 
+                ></p-button>
+            </div>
+        </form>
 </p-dialog>
-<p-button (click)="showDialog()" icon="pi pi-external-link" label="Show"></p-button>

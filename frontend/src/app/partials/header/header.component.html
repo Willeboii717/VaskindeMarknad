@@ -1,8 +1,9 @@
 <header>
     <div class="container">
-        <a routerLink="/register" class="booking">Register User</a>
-        <a routerLink="/" class="logo">Väskinde Marknad</a>
-        <a routerLink="/login" *ngIf="!isLoggedIn" class="login">Logga In</a>
-        <a routerLink="/login" *ngIf="isLoggedIn" class="login">Logga Ut</a>
+        <button routerLink="/register" class="booking">Register User</button>
+        <button routerLink="/" class="logo">Väskinde Marknad</button>
+        <button (click)="showLogInDialog()" class="login">Logga In</button>
+        <app-login-dialog></app-login-dialog>
+
     </div>
 </header>
