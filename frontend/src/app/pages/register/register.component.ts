@@ -1,9 +1,12 @@
+//Angular
 import { Component } from '@angular/core';
-import { Customer } from 'src/app/interfaces/customer';
+import { FormBuilder, FormControl, FormGroup, Validator } from '@angular/forms';
 
+//Project
+import { Customer } from 'src/app/interfaces/customer';
 import { CustomersService } from '../../services/customersService'
 
-import { FormBuilder, FormControl, FormGroup, Validator } from '@angular/forms';
+
 
 @Component({
   selector: 'app-register',
@@ -16,8 +19,8 @@ export class RegisterComponent {
   constructor(
     private CustomersService: CustomersService,
     private formBuilder: FormBuilder,
-
-  ) {
+  ) 
+  {
     this.createForm();
   }
 

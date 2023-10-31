@@ -60,9 +60,13 @@ router.post('/createCustomer',
 
     // If the insertion is successful, return a success message
     res.status(201).send({msg: "Customer Created Successfully"});
+    console.log("[server]: Post Success, Customer Created");
+    
   } catch (error) {
     // Handle any database errors
     res.status(500).send({msg: "Error creating customer"});
+    console.log("[server]: Post Failure, Database Error");
+    
   }
 });
 
