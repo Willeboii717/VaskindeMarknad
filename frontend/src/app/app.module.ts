@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //primeNG
-import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,7 +16,6 @@ import { PasswordModule } from 'primeng/password';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './partials/header/header.component';
-import { LoginComponent } from './pages/login/login.component';
 import { BookComponent } from './pages/book/book.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './partials/footer/footer.component';
@@ -28,7 +27,6 @@ import { LoginDialogComponent } from './partials/login-dialog/login-dialog.compo
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoginComponent,
     BookComponent,
     HomeComponent,
     FooterComponent,
@@ -46,7 +44,7 @@ import { LoginDialogComponent } from './partials/login-dialog/login-dialog.compo
     BrowserAnimationsModule,
 
     //primeNG
-    DialogModule,
+    DynamicDialogModule,
     ButtonModule,
     StyleClassModule,
     InputTextModule,
