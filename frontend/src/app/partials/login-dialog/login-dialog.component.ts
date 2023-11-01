@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validator } from '@angular/forms';
 
 //Project Imports
-
+import { loginCredentialsModel } from 'src/app/interfaces/customer';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login-dialog',
@@ -13,10 +14,10 @@ import { FormBuilder, FormControl, FormGroup, Validator } from '@angular/forms';
 
 export class LoginDialogComponent implements OnInit {
 
-  
 
   constructor(
     private formBuilder: FormBuilder,
+    private LoginService: LoginService,
   ){}
 
 
@@ -32,9 +33,13 @@ export class LoginDialogComponent implements OnInit {
       password: new FormControl('')
     });
   }
-  sendToConsole() {
-    const loginData: String[] = this.loginForm.value;
-    console.log(loginData);
-    
+
+  loginSubmit() {
+    const loginData: loginCredentialsModel = {
+      username: this.loginForm.get('username')?.value,
+      password: this.loginForm.get('password')?.value,
+    };
+    this.LoginService.login(loginData)
   }
+    
 }

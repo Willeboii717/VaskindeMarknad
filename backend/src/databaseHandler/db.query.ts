@@ -1,4 +1,3 @@
-import { Pool } from 'mysql';
 import pool from './db';
 
 // Function to execute a database query
@@ -16,9 +15,12 @@ export function executeQuery(query: string, params: any[] = []): Promise<any> {
             if (results.length === 1) {
               // If you expect a single row, return the first element of the results array
               resolve(results[0]);
-            } else {
+            } else if (results.length > 1) {
               // If you expect multiple rows, you can return the entire results array
               resolve(results);
+            } else {
+              // If there are no results, throw a custom error
+              reject(new Error('No data found'));
             }
           }
         });
@@ -26,3 +28,5 @@ export function executeQuery(query: string, params: any[] = []): Promise<any> {
     });
   });
 }
+
+

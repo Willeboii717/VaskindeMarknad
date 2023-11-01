@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validator } from '@angular/forms';
 
 //Project Imports
-import { Customer } from 'src/app/interfaces/customer';
-import { CustomersService } from '../../services/customersService'
+import { RegistrationCustomerModel } from 'src/app/interfaces/customer';
+import { CustomersService } from '../../services/registration.service'
 
 
 
@@ -38,16 +38,16 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit() { //Denna är felvänd, så returnar från service, vet inte vad som är mest korrekt dock
     if (this.registrationForm.valid) {
-      const customerData: Customer = this.registrationForm.value;
+      const customerData: RegistrationCustomerModel = this.registrationForm.value;
     this.CustomersService.createCustomer(customerData).subscribe(
         (response: any) => {
           console.log(response.msg);
           // dialog to return to previous page, and something
         },
         (error: any) => {
-          console.error(error.msg);
+          console.error(error.error);
           // red dialog, throw error, clear form and prompt reetrying
         }
       );
