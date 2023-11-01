@@ -17,15 +17,12 @@ export class HeaderComponent {
   constructor(LoginDialogComponent:LoginDialogComponent) {
 
   }
-  pressedButton: boolean = false;
 
   showDialog: boolean = false;
 
 
   showLogInDialog() {
-    console.log(LoginDialogComponent.getDialogStatus); //Fuck, fix this, call it good
     
-    this.showDialog = true;
     console.log("Pressed", this.showDialog);
     
   }

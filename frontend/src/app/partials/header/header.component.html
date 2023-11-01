@@ -3,7 +3,8 @@
         <button routerLink="/register" class="booking">Register User</button>
         <button routerLink="/" class="logo">Väskinde Marknad</button>
         <button (click)="showLogInDialog()" class="login">Logga In</button>
-        <app-login-dialog></app-login-dialog>
-
+        <div *ngIf="showDialog">
+            <app-login-dialog></app-login-dialog>
+        </div>
     </div>
 </header>

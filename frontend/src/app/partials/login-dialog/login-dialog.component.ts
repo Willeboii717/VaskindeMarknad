@@ -31,11 +31,6 @@ export class LoginDialogComponent implements OnInit {
   }
 
 
-  visible: boolean = false;
-  getDialogStatus() {
-    return this.visible
-  }
-
   sendToConsole() {
     const loginData: String[] = this.loginForm.value;
     console.log(loginData);
