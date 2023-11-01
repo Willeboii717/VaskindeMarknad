@@ -89,7 +89,7 @@ router.post('/loginCustomer',
     }    
     // Handle any database errors
     catch (error) {
-      res.status(500).send({msg: "Error in database, not Authenticated"});
+      res.status(401).send({msg: "Error in database, not Authenticated"});
       console.log("[server]: Post Failure, ", error); //Denna borde catchas individuellt, och alla andra databas errors separat,
     }
 });
