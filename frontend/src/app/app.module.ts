@@ -10,7 +10,9 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
 import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 
 //Project
 import { AppRoutingModule } from './app-routing.module';
@@ -48,9 +50,9 @@ import { LoginDialogComponent } from './partials/login-dialog/login-dialog.compo
     ButtonModule,
     StyleClassModule,
     InputTextModule,
-    PasswordModule
+    ToastModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

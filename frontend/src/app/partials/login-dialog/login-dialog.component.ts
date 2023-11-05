@@ -1,9 +1,14 @@
 //Angular Imports
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, RequiredValidator, Validator, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+//PrimeNG Imports
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+
 
 //Project Imports
 import { loginCredentialsModel } from 'src/app/interfaces/customer';
+import { ToastService } from 'src/app/service/toast.service';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -13,12 +18,17 @@ import { LoginService } from 'src/app/services/login.service';
 })
 
 export class LoginDialogComponent implements OnInit {
+
   errorText: String = "";
   hasErrors: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
+
+    //Services
     private LoginService: LoginService,
+
+    private ref: DynamicDialogRef
   ){}
 
 
@@ -28,7 +38,7 @@ export class LoginDialogComponent implements OnInit {
 
 
   loginForm!: FormGroup;
-  private createLoginForm() {
+  private createLoginForm() { //Form controls
     this.loginForm = this.formBuilder.group({
       username: new FormControl('', [
         Validators.required
@@ -62,11 +72,16 @@ export class LoginDialogComponent implements OnInit {
     if (this.hasErrors === false) {
       this.LoginService.login(loginData).subscribe(
         (response: any) => {
-          console.log(response);
+          this.ref.close('success');
+          console.log(response.msg);
+          
         },
         (error: any) => {
-         //Working here
-          this.errorText = error.error; // Update errorText with the error message from the backend
+          if (error.status === 401) {
+            this.errorText = error.error;
+            this.hasErrors = true;
+            this.errorText = "Username or password is incorrect";
+          }
         }
       );
     }

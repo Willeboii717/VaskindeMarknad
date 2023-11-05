@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 //Project Imports
 import { RegistrationCustomerModel } from 'src/app/interfaces/customer';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component'; 
+import { ToastService } from 'src/app/service/toast.service';
 
 
 @Component({
@@ -15,13 +16,20 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 export class HeaderComponent { 
 
   constructor(
-    private dialogService: DialogService
+    //Services
+    private dialogService: DialogService,
+    private toastSerivce: ToastService,
     ) {}
 
   showDialog: boolean = false;
 
-  ref: DynamicDialogRef | undefined;
-  showLogInDialog() {
-    this.dialogService.open(LoginDialogComponent, {});
+  showLoginDialog() {
+    const ref = this.dialogService.open(LoginDialogComponent, {});
+
+    ref.onClose.subscribe((result) => {
+      if (result === 'success') {
+        this.toastSerivce.showSuccessToast('Login successful!');
+      }
+    });
   }
 }

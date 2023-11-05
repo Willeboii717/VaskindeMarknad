@@ -29,7 +29,6 @@ input {
 
 .dirty {
     border: solid 2px red;
-    color: red;
     opacity: 1;
 }
 

@@ -2,9 +2,9 @@
     <div class="container">
         <button routerLink="/register" class="booking">Register User</button>
         <button routerLink="/" class="logo">Väskinde Marknad</button>
-        <button (click)="showLogInDialog()" class="login">Logga In</button>
+        <button (click)="showLoginDialog()" class="login">Logga In</button>
         <div *ngIf="showDialog">
-            
         </div>
+        <p-toast></p-toast>
     </div>
 </header>
