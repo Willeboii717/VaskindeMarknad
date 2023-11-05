@@ -1,5 +1,3 @@
-
-
 .title {
     font-size: 250%;
     text-align: center;
@@ -23,7 +21,24 @@ input {
 
 .buttonFlex {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     margin-top: 1em;
 }
 
+.dirty {
+    border: solid 2px red;
+    color: red;
+    opacity: 1;
+}
+
+.error {
+    opacity: 1;
+
+    font-size: 120%;
+    text-align: center;
+    color: red;
+    padding-top: 0%;
+    padding-bottom: 0.5em;
+}

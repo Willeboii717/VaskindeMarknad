@@ -1,6 +1,6 @@
 //Angular Imports
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validator } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, RequiredValidator, Validator, Validators } from '@angular/forms';
 
 //Project Imports
 import { loginCredentialsModel } from 'src/app/interfaces/customer';
@@ -13,7 +13,9 @@ import { LoginService } from 'src/app/services/login.service';
 })
 
 export class LoginDialogComponent implements OnInit {
-
+  errorText: String = "";
+  isSubmitted: boolean = false;
+  hasErrors: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,17 +31,41 @@ export class LoginDialogComponent implements OnInit {
   loginForm!: FormGroup;
   private createLoginForm() {
     this.loginForm = this.formBuilder.group({
-      username: new FormControl(''),
-      password: new FormControl('')
+      username: new FormControl('', [
+        Validators.required
+      ]),
+      password: new FormControl('', [
+        Validators.required
+       ])
     });
   }
 
+  validation(): boolean {
+      if (
+        this.loginForm.invalid ||
+        this.loginForm.untouched
+        )
+        {
+        this.errorText = "Please Fill all the fields";
+        return true;        
+      }
+    else {
+      return false;
+    }
+  }
+
   loginSubmit() {
+    this.isSubmitted = true;
     const loginData: loginCredentialsModel = {
       username: this.loginForm.get('username')?.value,
       password: this.loginForm.get('password')?.value,
     };
-    this.LoginService.login(loginData)
-  }
     
+    this.hasErrors = this.validation();
+    
+    if (this.hasErrors == false) {
+      this.LoginService.login(loginData)
+    }
+  }
+
 }

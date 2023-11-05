@@ -22,7 +22,6 @@ export class HeaderComponent {
 
   ref: DynamicDialogRef | undefined;
   showLogInDialog() {
-    console.log("Pressed", this.showDialog);
     this.dialogService.open(LoginDialogComponent, {});
   }
 }

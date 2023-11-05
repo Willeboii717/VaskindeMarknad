@@ -4,17 +4,22 @@
         <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
                 <label>Username:</label>
                 <input
+                    [ngClass]="{ 'dirty': hasErrors}"                    
                     type="text" 
                     pInputText
                     formControlName="username"
                 />
                 <label>Password:</label>
                     <input
+                    [ngClass]="{ 'dirty': hasErrors}"
                         type="password"
                         pInputText
                         formControlName="password"
                     />
             <div class="buttonFlex">
+                <div class="error" *ngIf="hasErrors">
+                    <p>{{errorText}}</p>
+                </div>
                 <p-button 
                     label="Logga In" 
                     type="submit" 
