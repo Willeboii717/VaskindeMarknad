@@ -4,6 +4,7 @@ const router = express.Router();
 import { executeQuery } from "../databaseHandler/db.query";
 //Interfaces
 import { CustomerModel, loginCredentialModel } from '../models/customer';
+import { httpErrorModel } from "../models/error";
 //Validators
 import { createCustomerValidator, loginValidator } from '../validators/customerValidator';
 import { runValidator } from "../validators/validatorRunner";
@@ -73,7 +74,7 @@ router.post('/loginCustomer',
   loginValidator,
   runValidator,
   async (req: Request, res: Response) => {
-    console.log("[server]: entering Post, loginCustomer");
+    console.log("[server]: entering Post, loginCustomer ", req.body);
     const frontEndDataCustomer:loginCredentialModel = req.body;
     try {
       //Query definition
@@ -90,8 +91,26 @@ router.post('/loginCustomer',
     }    
     // Handle any database errors
     catch (error) {
-      res.status(401).send({msg: "Error in database, not Authenticated"});
-      console.log("[server]: Post Failure, ", error); //Denna borde catchas individuellt, och alla andra databas errors separat,
+      console.log(error);
+      
+      if (error === "NO_DATA") {
+        const resError: httpErrorModel = {
+          code: 'CREDENTIALS_MISMATCHED',
+          message: 'Credentials mismatch',
+          status: 401,
+        };
+        res.status(resError.status).json({ error: resError.code, message: resError.message });
+        console.log("[server]: POST Failure, Credentials mismatch");
+      }
+      else {
+        const resError: httpErrorModel = {
+          code: 'SQL_ERROR',
+          message: 'Error in database, not Authenticated',
+          status: 500,
+        };
+        res.status(resError.status).json({ error: resError.code, message: resError.message });
+        console.log("[server]: POST Failure, Database Error");
+      }
     }
 });
 

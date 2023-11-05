@@ -20,7 +20,7 @@ export function executeQuery(query: string, params: any[] = []): Promise<any> {
               resolve(results);
             } else {
               // If there are no results, throw a custom error
-              reject(new Error('No data found'));
+              reject('NO_DATA');
             }
           }
         });

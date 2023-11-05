@@ -49,7 +49,7 @@ export class LoginDialogComponent implements OnInit {
     });
   }
 
-  isValidated(): boolean { //Checks if form is valid bu above validators
+  isValidated(): boolean { //Checks if form is valid by above validators
       if ( this.loginForm.invalid )
       {
         this.errorText = "Please fill all the fields";
@@ -66,15 +66,11 @@ export class LoginDialogComponent implements OnInit {
       username: this.loginForm.get('username')?.value,
       password: this.loginForm.get('password')?.value,
     };
-
     this.hasErrors = this.isValidated();
-    
     if (this.hasErrors === false) {
       this.LoginService.login(loginData).subscribe(
         (response: any) => {
-          this.ref.close('success');
-          console.log(response.msg);
-          
+          this.ref.close('success'); //on 
         },
         (error: any) => {
           if (error.status === 401) {
@@ -82,8 +78,10 @@ export class LoginDialogComponent implements OnInit {
             this.hasErrors = true;
             this.errorText = "Username or password is incorrect";
           }
-        }
-      );
+        });
     }
+
   }
+
+
 }
