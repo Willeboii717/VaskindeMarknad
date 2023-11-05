@@ -70,7 +70,8 @@ router.post('/createCustomer',
 
 
 router.post('/loginCustomer',
-  //add runValidator, and validator itself
+  loginValidator,
+  runValidator,
   async (req: Request, res: Response) => {
     console.log("[server]: entering Post, loginCustomer");
     const frontEndDataCustomer:loginCredentialModel = req.body;
