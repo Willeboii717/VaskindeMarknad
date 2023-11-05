@@ -33,9 +33,7 @@ input {
     opacity: 1;
 }
 
-.error {
-    opacity: 1;
-
+.errorBlock {
     font-size: 120%;
     text-align: center;
     color: red;

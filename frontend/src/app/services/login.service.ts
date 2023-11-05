@@ -17,14 +17,8 @@ export class LoginService {
     private http: HttpClient
   ) { }
   
-  login(loginCredentials: loginCredentialsModel){
-    this.http.post(this.baseURL + 'loginCustomer', loginCredentials).subscribe(
-      (response:any) => {
-        console.log(response);
-      },
-      (error:any) => {
-        // Handle login errors
-      }
+  login(loginCredentials: loginCredentialsModel): Observable<any> {
+    return this.http.post(this.baseURL + 'loginCustomer', loginCredentials).pipe(
     );
   }
 }

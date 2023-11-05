@@ -14,7 +14,6 @@ import { LoginService } from 'src/app/services/login.service';
 
 export class LoginDialogComponent implements OnInit {
   errorText: String = "";
-  isSubmitted: boolean = false;
   hasErrors: boolean = false;
 
   constructor(
@@ -40,32 +39,36 @@ export class LoginDialogComponent implements OnInit {
     });
   }
 
-  validation(): boolean {
-      if (
-        this.loginForm.invalid ||
-        this.loginForm.untouched
-        )
-        {
-        this.errorText = "Please Fill all the fields";
+  isValidated(): boolean { //Checks if form is valid bu above validators
+      if ( this.loginForm.invalid )
+      {
+        this.errorText = "Please fill all the fields";
         return true;        
       }
-    else {
+    else 
+    {
       return false;
     }
   }
 
-  loginSubmit() {
-    this.isSubmitted = true;
+  loginSubmit() { //Runs validation and if true, sends http request through service
     const loginData: loginCredentialsModel = {
       username: this.loginForm.get('username')?.value,
       password: this.loginForm.get('password')?.value,
     };
+
+    this.hasErrors = this.isValidated();
     
-    this.hasErrors = this.validation();
-    
-    if (this.hasErrors == false) {
-      this.LoginService.login(loginData)
+    if (this.hasErrors === false) {
+      this.LoginService.login(loginData).subscribe(
+        (response: any) => {
+          console.log(response);
+        },
+        (error: any) => {
+         //Working here
+          this.errorText = error.error; // Update errorText with the error message from the backend
+        }
+      );
     }
   }
-
 }

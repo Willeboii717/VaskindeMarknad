@@ -17,8 +17,8 @@
                         formControlName="password"
                     />
             <div class="buttonFlex">
-                <div class="error" *ngIf="hasErrors">
-                    <p>{{errorText}}</p>
+                <div *ngIf="hasErrors">
+                    <p  class="errorBlock">{{errorText}}</p>
                 </div>
                 <p-button 
                     label="Logga In" 
