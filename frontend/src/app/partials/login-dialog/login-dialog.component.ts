@@ -8,7 +8,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 //Project Imports
 import { loginCredentialsModel } from 'src/app/interfaces/customer';
-import { ToastService } from 'src/app/service/toast.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({

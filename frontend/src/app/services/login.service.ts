@@ -18,7 +18,7 @@ export class LoginService {
   ) { }
   
   login(loginCredentials: loginCredentialsModel): Observable<any> {
-    return this.http.post(this.baseURL + 'loginCustomer', loginCredentials).pipe(
+    return this.http.post(this.baseURL + 'loginUser', loginCredentials).pipe(
     );
   }
 }

@@ -4,7 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 //Project Imports
 import { RegistrationCustomerModel } from 'src/app/interfaces/customer';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component'; 
-import { ToastService } from 'src/app/service/toast.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 
 @Component({
