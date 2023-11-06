@@ -1,8 +1,7 @@
 //Angular Imports
 import { Component } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService } from 'primeng/dynamicdialog';
 //Project Imports
-import { RegistrationCustomerModel } from 'src/app/interfaces/customer';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component'; 
 import { ToastService } from 'src/app/services/toast.service';
 import { LoginService } from 'src/app/services/login.service';
