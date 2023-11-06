@@ -2,7 +2,8 @@
     <div class="container">
         <button routerLink="/register" class="booking">Register User</button>
         <button routerLink="/" class="logo">Väskinde Marknad</button>
-        <button (click)="showLoginDialog()" class="login">Logga In</button>
+        <button *ngIf="!isAuth" (click)="showLoginDialog()" class="login">Logga In</button>
+        <button *ngIf="isAuth" (click)="logOutButton()" class="login">Logga Ut</button>
         <div *ngIf="showDialog">
         </div>
         <p-toast></p-toast>

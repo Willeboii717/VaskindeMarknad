@@ -18,7 +18,6 @@ import { LoginService } from 'src/app/services/login.service';
 })
 
 export class LoginDialogComponent implements OnInit {
-
   errorText: String = "";
   hasErrors: boolean = false;
 
@@ -70,7 +69,8 @@ export class LoginDialogComponent implements OnInit {
     if (this.hasErrors === false) {
       this.LoginService.login(loginData).subscribe(
         (response: any) => {
-          this.ref.close('success'); //on 
+          this.LoginService.setIsAuth(true);
+          this.ref.close('success'); //Closes dialog with success, toast catches
         },
         (error: any) => {
           if (error.status === 401) {
@@ -82,6 +82,5 @@ export class LoginDialogComponent implements OnInit {
     }
 
   }
-
 
 }
