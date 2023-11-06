@@ -18,7 +18,7 @@ export class HeaderComponent {
   constructor(
     //Services
     private dialogService: DialogService,
-    private toastSerivce: ToastService,
+    private toastSerivce: ToastService
     ) {}
 
   showDialog: boolean = false;
