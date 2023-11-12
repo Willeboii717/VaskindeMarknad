@@ -1,6 +1,6 @@
 import pool from './db';
 
-export function executeQuery(query: string, params: any[] = []): Promise<any> {
+export function executeGetQuery(query: string, params: any[] = []): Promise<any> {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) {

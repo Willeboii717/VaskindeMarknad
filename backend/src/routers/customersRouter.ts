@@ -1,7 +1,7 @@
 import express, {NextFunction, Request, Response} from "express";
 const router = express.Router();
 //Database
-import { executeQuery } from "../databaseHandler/db.query";
+import { executeGetQuery } from "../databaseHandler/db.query";
 //Interfaces
 import { CustomerModel, loginCredentialModel } from '../models/customer';
 import { httpErrorModel } from "../models/error";
@@ -11,6 +11,14 @@ import { runValidator } from "../validators/validatorRunner";
 //Controllers
 import { checkIfUserExists } from "../controllers/CustomerController";
 
+
+router.get('/getUserByID/:ID',
+async (req: Request, res: Response) => {
+  console.log("[server]: entering Get, GetUserByID");
+  const param = req.params.ID;
+  res.json(param);
+
+  });
 
 router.post('/createUser',
   createCustomerValidator, // determines what should be validated
@@ -22,7 +30,7 @@ router.post('/createUser',
     const user: CustomerModel = req.body;
     const query = 'INSERT INTO customers (username, email, firstname, lastname, password) VALUES (?, ?, ?, ?, ?)';
     
-    executeQuery(query, [user.username, user.email, user.firstname, user.lastname, user.password])
+    executeGetQuery(query, [user.username, user.email, user.firstname, user.lastname, user.password])
       .then((result) => {
         console.log(result);
         res.send("User created successfully"); //This is a WIP, need to split DB query, so this doesnt expect a return value
@@ -51,7 +59,7 @@ router.post('/loginUser',
       //Query definition
       const query = 'SELECT * FROM CUSTOMERS WHERE USERNAME = ? AND PASSWORD = ?';
       //Exe Query
-      const resultOfQuery:CustomerModel = await executeQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
+      const resultOfQuery:CustomerModel = await executeGetQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
       //If successful find of customer, return
       if (resultOfQuery != null) {
         res.status(201).send({msg: "Customer Authenticated"});

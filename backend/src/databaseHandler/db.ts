@@ -14,7 +14,6 @@ const pool = mysql.createPool(dbConfig);
 // Export the connection pool
 export default pool;
 
-// Optionally, you can export a getConnection function if needed
 export const getConnection = () => {
   return new Promise<mysql.PoolConnection>((resolve, reject) => {
     pool.getConnection((err, connection) => {
