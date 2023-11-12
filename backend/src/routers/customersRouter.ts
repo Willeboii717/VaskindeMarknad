@@ -1,9 +1,10 @@
-import express, {Request, Response} from "express";
+import express, {NextFunction, Request, Response} from "express";
 const router = express.Router();
 //Database
 import { executeQuery } from "../databaseHandler/db.query";
 //Interfaces
-import { Customer } from '../models/customer';
+import { CustomerModel, loginCredentialModel } from '../models/customer';
+import { httpErrorModel } from "../models/error";
 //Validators
 import { createCustomerValidator, loginValidator } from '../validators/customerValidator';
 import { runValidator } from "../validators/validatorRunner";
@@ -11,59 +12,73 @@ import { runValidator } from "../validators/validatorRunner";
 import { checkIfUserExists } from "../controllers/CustomerController";
 
 
-
-
-// GET: Retrieve a list of all customers
-router.get('/customers', async (req, res) => {
-  const query = await executeQuery("SELECT * FROM customers");
-
-  const Customer:Customer[] = query;
-  if (Customer.length > 0) {
-    res.send(Customer);
-  }
-  else {
-    console.log("Error, could not get Customers")
-  }
-  
-});
-
-//Get specific customer by ID
-router.get("/customers/:id", async (req, res) => {
-  const customerId = req.params.id;
-  const query = await executeQuery
-    ("SELECT * FROM customers WHERE id = ?", [customerId]);  
-  const customer: Customer = query;
-
-  if ( customer.id != null ) {
-    res.send(customer);
-  }
-  else {
-    res.status(404).send("Error, customer with that ID is not found");  
-  }
-});
-
-
-
-router.post('/createCustomer',
-  createCustomerValidator, //determines what should be validated
+router.post('/createUser',
+  createCustomerValidator, // determines what should be validated
   runValidator, // runs validator on body
-  checkIfUserExists, //Checks if users exists
+  checkIfUserExists, // Checks if users exist
   async (req: Request, res: Response) => {
-
-  //Placing body in customer interface
-  const customer:Customer = req.body;
-  try {
-    // Defining query to insert a customer
+    console.log("[server]: entering Post, createCustomer");
+    // Placing body in User interface
+    const user: CustomerModel = req.body;
     const query = 'INSERT INTO customers (username, email, firstname, lastname, password) VALUES (?, ?, ?, ?, ?)';
-    // Execute the query with parameters
-    await executeQuery(query, [customer.username, customer.email, customer.firstname, customer.lastname, customer.password]);
+    
+    executeQuery(query, [user.username, user.email, user.firstname, user.lastname, user.password])
+      .then((result) => {
+        console.log(result);
+        res.send("User created successfully"); //This is a WIP, need to split DB query, so this doesnt expect a return value
+      })
+      .catch((error) => {
+        if (error === "NO_DATA") {
+          console.log(error);
+          res.send("NO DATA ERROR");
+        }
+        else {
+          console.log(error);
+          res.send("UNSPECIFIED ERROR");
+        }
+      });
+  });
 
-    // If the insertion is successful, return a success message
-    res.status(201).send({msg: "Customer Created Successfully"});
-  } catch (error) {
+
+
+router.post('/loginUser',
+  loginValidator,
+  runValidator,
+  async (req: Request, res: Response) => {
+    console.log("[server]: entering Post, loginCustomer ", req.body);
+    const frontEndDataUser:loginCredentialModel = req.body;
+    try {
+      //Query definition
+      const query = 'SELECT * FROM CUSTOMERS WHERE USERNAME = ? AND PASSWORD = ?';
+      //Exe Query
+      const resultOfQuery:CustomerModel = await executeQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
+      //If successful find of customer, return
+      if (resultOfQuery != null) {
+        res.status(201).send({msg: "Customer Authenticated"});
+        console.log("[server]: Post Success, Customer Authenticated");
+      }
+    }    
     // Handle any database errors
-    res.status(500).send({msg: "Error creating customer"});
-  }
+    catch (error) {
+      if (error === "NO_DATA") {
+        const resError: httpErrorModel = {
+          code: 'CREDENTIALS_MISMATCHED',
+          message: 'Credentials mismatch',
+          status: 401,
+        };
+        res.status(resError.status).json({ error: resError.code, message: resError.message });
+        console.log("[server]: POST Failure, Credentials mismatch");
+      }
+      else {
+        const resError: httpErrorModel = {
+          code: 'SQL_ERROR',
+          message: 'Error in database, not Authenticated',
+          status: 500,
+        };
+        res.status(resError.status).json({ error: resError.code, message: resError.message });
+        console.log("[server]: POST Failure, Database Error");
+      }
+    }
 });
 
 module.exports = router;

@@ -10,7 +10,8 @@ export function runValidator(
 {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        return res.status(500).send({ errors });
+        console.log("[server]: Post Failure,  Didn't pass validation");
+        return res.status(400).send({msg: errors});
     }
     next();
 }

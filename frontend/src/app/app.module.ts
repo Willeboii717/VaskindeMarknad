@@ -1,40 +1,58 @@
+//Angular
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+//primeNG
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ButtonModule } from 'primeng/button';
+import { StyleClassModule } from 'primeng/styleclass';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
+
+//Project
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './partials/header/header.component';
-
-import {MatMenuModule} from '@angular/material/menu';
-import { LoginComponent } from './pages/login/login.component';
 import { BookComponent } from './pages/book/book.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './partials/footer/footer.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { LoginDialogComponent } from './partials/login-dialog/login-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoginComponent,
     BookComponent,
     HomeComponent,
     FooterComponent,
     RegisterComponent,
+    LoginDialogComponent,
 
   ],
 
   imports: [
+    //Angular
     BrowserModule,
     AppRoutingModule,
-    MatMenuModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+
+    //primeNG
+    DynamicDialogModule,
+    ButtonModule,
+    StyleClassModule,
+    InputTextModule,
+    ToastModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

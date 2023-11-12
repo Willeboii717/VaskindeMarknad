@@ -1,4 +1,4 @@
-import { body} from 'express-validator';
+import { body, check} from 'express-validator';
 
 const createCustomerValidator = [
     body('username', 'Username is required').not().isEmpty(),
@@ -10,6 +10,8 @@ const createCustomerValidator = [
 export {createCustomerValidator as createCustomerValidator};
 
 const loginValidator = [
-  body('email', 'Username is required').not().isEmpty(),
-]
+  //Sanitation of login
+  check('username', 'Username is required').trim().escape().not().isEmpty(), //Should be handled with own error model, eventually
+  check('password', 'password is required').trim().escape().not().isEmpty()
+];
 export {loginValidator as loginValidator}
