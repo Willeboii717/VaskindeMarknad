@@ -60,6 +60,8 @@ router.post('/loginUser',
       const query = 'SELECT * FROM CUSTOMERS WHERE USERNAME = ? AND PASSWORD = ?';
       //Exe Query
       const resultOfQuery:CustomerModel = await executeGetQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
+      console.log(resultOfQuery);
+      
       //If successful find of customer, return
       if (resultOfQuery != null) {
         res.status(201).send({msg: "Customer Authenticated"});
