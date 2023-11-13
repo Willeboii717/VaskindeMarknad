@@ -32,7 +32,7 @@ router.post('/createUser',
     
     executeGetQuery(query, [user.username, user.email, user.firstname, user.lastname, user.password])
       .then((result) => {
-        console.log(result);
+        console.log("Result from DB: ", result);
         res.send("User created successfully"); //This is a WIP, need to split DB query, so this doesnt expect a return value
       })
       .catch((error) => {
@@ -60,17 +60,13 @@ router.post('/loginUser',
       const query = 'SELECT * FROM CUSTOMERS WHERE USERNAME = ? AND PASSWORD = ?';
       //Exe Query
       const resultOfQuery:CustomerModel = await executeGetQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
-      console.log(resultOfQuery);
       
       //If successful find of customer, return
-      if (resultOfQuery != null) {
+      if (Object.keys(resultOfQuery).length >= 1) {
         res.status(201).send({msg: "Customer Authenticated"});
         console.log("[server]: Post Success, Customer Authenticated");
       }
-    }    
-    // Handle any database errors
-    catch (error) {
-      if (error === "NO_DATA") {
+      else {
         const resError: httpErrorModel = {
           code: 'CREDENTIALS_MISMATCHED',
           message: 'Credentials mismatch',
@@ -79,7 +75,9 @@ router.post('/loginUser',
         res.status(resError.status).json({ error: resError.code, message: resError.message });
         console.log("[server]: POST Failure, Credentials mismatch");
       }
-      else {
+    }    
+    // Handle any database errors
+    catch (error) {
         const resError: httpErrorModel = {
           code: 'SQL_ERROR',
           message: 'Error in database, not Authenticated',
@@ -88,7 +86,6 @@ router.post('/loginUser',
         res.status(resError.status).json({ error: resError.code, message: resError.message });
         console.log("[server]: POST Failure, Database Error");
       }
-    }
 });
 
 module.exports = router;
