@@ -18,8 +18,8 @@ export function executeGetQuery(query: string, params: any[] = []): Promise<any>
         if (results && Object.keys(results).length > 0) { //check for length, if more than 0, db returned data, resolve
           resolve(Object.keys(results).length === 1 ? results[0] : results); //if 
         } else {
-          resolve(results);
-          reject("NO_DATA"); //Need to look over this
+
+          return reject("NO_DATA"); //Need to look over this
         }
       });
     });

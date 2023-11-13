@@ -33,7 +33,7 @@ router.post('/createUser',
     executeGetQuery(query, [user.username, user.email, user.firstname, user.lastname, user.password])
       .then((result) => {
         console.log("Result from DB: ", result);
-        res.send("User created successfully"); //This is a WIP, need to split DB query, so this doesnt expect a return value
+        res.send("User created successfully"); //This is a WIP, 
       })
       .catch((error) => {
         if (error === "NO_DATA") {

@@ -12,7 +12,7 @@ export async function checkIfUserExists(req: Request, res: Response, next: NextF
 
     if (resultOfQuery.username != null ||resultOfQuery.username != undefined) {
       console.log("[server]: User already exists");
-      res.status(409).send({
+      res.status(409).json({
         error: {
           code: 'USER_ALREADY_EXISTS',
           message: 'User already exists',
@@ -23,11 +23,15 @@ export async function checkIfUserExists(req: Request, res: Response, next: NextF
       next()
     }
   } catch (error) {
+    if (error == "NO_DATA") {
+      console.log("No data");
+      
+    }
     const httperror: httpErrorModel = {
       code: 'INTERNAL_SERVER_ERROR',
       message: 'Internal server error',
       status: 500,
     };
-    res.status(httperror.status).send(httperror);
+    res.status(httperror.status).json(httperror);
   }
 }
