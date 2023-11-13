@@ -13,7 +13,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
-
 //Project
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
