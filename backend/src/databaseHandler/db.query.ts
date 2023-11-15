@@ -14,12 +14,14 @@ export function executeGetQuery(query: string, params: any[] = []): Promise<any>
         if (queryError) {
           return reject(queryError); //If queryerror, reject
         }
+        console.log(results);
         
-        if (results && Object.keys(results).length > 0) { //check for length, if more than 0, db returned data, resolve
-          resolve(Object.keys(results).length === 1 ? results[0] : results); //if 
-        } else {
-
-          return reject("NO_DATA"); //Need to look over this
+        if (results && results.length > 0) { //check for length, if more than 0, db returned data, resolve
+          resolve(results.length === 1 ? results[0] : results); //if 
+        } 
+        else {
+          console.log(typeof results, results);
+          reject(reason? "NO_DATA"); //Think Jocke fixed, will chaosTest
         }
       });
     });

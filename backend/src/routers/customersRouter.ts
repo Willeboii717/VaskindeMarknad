@@ -16,14 +16,16 @@ router.get('/getUserByID/:ID',
 async (req: Request, res: Response) => {
   console.log("[server]: entering Get, GetUserByID");
   const param = req.params.ID;
-  res.json(param);
+  const query = "SELECT * FROM CUSTOMERS"
+  const queryResult = executeGetQuery(query, [req.params.ID]);
+  res.json(queryResult);
 
   });
 
 router.post('/createUser',
   createCustomerValidator, // determines what should be validated
   runValidator, // runs validator on body
-  checkIfUserExists, // Checks if users exist
+    checkIfUserExists, // Checks if users exist
   async (req: Request, res: Response) => {
     console.log("[server]: entering Post, createCustomer");
     // Placing body in User interface
@@ -59,10 +61,10 @@ router.post('/loginUser',
       //Query definition
       const query = 'SELECT * FROM CUSTOMERS WHERE USERNAME = ? AND PASSWORD = ?';
       //Exe Query
-      const resultOfQuery:CustomerModel = await executeGetQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
+      const resultOfQuery:CustomerModel[] = await executeGetQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
       
       //If successful find of customer, return
-      if (Object.keys(resultOfQuery).length >= 1) {
+      if (resultOfQuery.length >= 1) {
         res.status(201).send({msg: "Customer Authenticated"});
         console.log("[server]: Post Success, Customer Authenticated");
       }
