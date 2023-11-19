@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import "reflect-metadata"
 
 
 const customerRouter  = require('./routers/customersRouter');
