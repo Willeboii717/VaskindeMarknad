@@ -1,15 +1,26 @@
 {
-   "compilerOptions": {
-      "lib": [
-         "es5",
-         "es6"
-      ],
-      "target": "es5",
+    "compilerOptions": {
+      "lib": ["es5", "es6"],
+      "outDir": "./built",
+      "rootDir": "./src",
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "target": "ES2019",
       "module": "commonjs",
       "moduleResolution": "node",
-      "outDir": "./build",
+      "importHelpers": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "sourceMap": true
-   }
-}
+      "sourceMap": true,
+      "noImplicitAny": true,
+      "declaration": true,
+      "noFallthroughCasesInSwitch": true,
+      "stripInternal": true,
+      "pretty": true,
+      "strictNullChecks": true,
+      "downlevelIteration": true
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["tmp", "temp", "build", "node_modules"]
+  }
+  

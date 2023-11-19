@@ -1,9 +1,11 @@
-import express, {NextFunction, Request, Response} from "express";
-const router = express.Router();
+import express, {Request, Response} from "express";
+
+import { getRepository  } from "typeorm";
+
 //Database
 import { executeGetQuery } from "../databaseHandler/db.query";
 //Interfaces
-import { CustomerModel, loginCredentialModel } from '../models/customer';
+import { Customer } from '../entity/Customer';
 import { httpErrorModel } from "../models/error";
 //Validators
 import { createCustomerValidator, loginValidator } from '../validators/customerValidator';
@@ -12,15 +14,24 @@ import { runValidator } from "../validators/validatorRunner";
 import { checkIfUserExists } from "../controllers/CustomerController";
 
 
-router.get('/getUserByID/:ID',
-async (req: Request, res: Response) => {
-  console.log("[server]: entering Get, GetUserByID");
-  const param = req.params.ID;
-  const query = "SELECT * FROM CUSTOMERS"
-  const queryResult = executeGetQuery(query, [req.params.ID]);
-  res.json(queryResult);
+const router = express.Router();
 
-  });
+router.get('/getUserByID/:ID', async (req: Request, res: Response) => {
+  console.log("[server]: entering Get, GetUserByID");
+
+  try {
+    const customerRepository = getRepository(Customer);
+    const customer = await customerRepository.findOne(Number(req.params.ID));
+    if (customer) {
+      res.json(customer);
+    } else {
+      res.status(404).json({ message: 'Customer not found' });
+    }
+  } catch (error) {
+    console.error('Error:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 router.post('/createUser',
   createCustomerValidator, // determines what should be validated
@@ -56,7 +67,7 @@ router.post('/loginUser',
   runValidator,
   async (req: Request, res: Response) => {
     console.log("[server]: entering Post, loginCustomer ", req.body);
-    const frontEndDataUser:loginCredentialModel = req.body;
+    const frontEndDataUser:CustomerModel = req.body;
     try {
       //Query definition
       const query = 'SELECT * FROM CUSTOMERS WHERE USERNAME = ? AND PASSWORD = ?';

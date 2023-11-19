@@ -21,7 +21,7 @@ export function executeGetQuery(query: string, params: any[] = []): Promise<any>
         } 
         else {
           console.log(typeof results, results);
-          reject(reason? "NO_DATA"); //Think Jocke fixed, will chaosTest
+          reject("NO_DATA"); //Think Jocke fixed, will chaosTest
         }
       });
     });

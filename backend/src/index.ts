@@ -1,20 +1,29 @@
-import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
+import express from "express";
+import cors from "cors";
+import "reflect-metadata"
 
-AppDataSource.initialize().then(async () => {
 
-    console.log("Inserting a new user into the database...")
-    const user = new User()
-    user.firstName = "Timber"
-    user.lastName = "Saw"
-    user.age = 25
-    await AppDataSource.manager.save(user)
-    console.log("Saved a new user with id: " + user.id)
+const customerRouter  = require('./routers/customersRouter');
+const app = express();
 
-    console.log("Loading users from the database...")
-    const users = await AppDataSource.manager.find(User)
-    console.log("Loaded users: ", users)
+import bodyParser from 'body-parser';
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-    console.log("Here you can setup and run express / fastify / any other framework.")
 
-}).catch(error => console.log(error))
+
+app.use(cors ({
+  credentials:true,
+  origin:["http://localhost:4200"]
+}));
+
+app.get("/", (req, res) => {
+  res.send("Hello World from /");
+});
+
+app.use('/api', customerRouter);
+
+const port = 5000;
+app.listen(port, () => {
+  console.log("Server Running on port " + port);
+});

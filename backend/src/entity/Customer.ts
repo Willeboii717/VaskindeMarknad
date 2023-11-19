@@ -20,9 +20,3 @@ export class CustomerModel {
     @Column()
     password: string;
 }
-
-@Entity()
-export class loginCredentialModel {
-    username: string;
-    password: string;
-}

@@ -4,9 +4,8 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "start": "ts-node src/index.ts",
-      "devStart": "nodemon server.ts",
-      "typeorm": "typeorm-ts-node-commonjs"
+     "start": "node built/index.js",
+     "dev": "nodemon --watch src/**/*.ts --exec npx ts-node src/index.ts"
    },
    "author": "",
    "license": "ISC",
