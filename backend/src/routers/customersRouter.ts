@@ -1,7 +1,7 @@
 import express, {NextFunction, Request, Response} from "express";
 const router = express.Router();
 //Database
-import { executeGetQuery } from "../databaseHandler/db.query";
+import { executeGETQuery } from "../databaseHandler/db.query";
 //Interfaces
 import { CustomerModel, loginCredentialModel } from '../models/customer';
 import { httpErrorModel } from "../models/error";
@@ -13,12 +13,27 @@ import { checkIfUserExists } from "../controllers/CustomerController";
 
 
 router.get('/getUserByID/:ID',
-async (req: Request, res: Response) => {
+async (req: Request, res: Response, next: NextFunction) => {
   console.log("[server]: entering Get, GetUserByID");
   const param = req.params.ID;
-  const query = "SELECT * FROM CUSTOMERS"
-  const queryResult = executeGetQuery(query, [req.params.ID]);
-  res.json(queryResult);
+  try {
+    const query = "SELECT * FROM CUSTOMERS WHERE ID = ?"
+    const queryResult = await executeGETQuery(query, [param]);
+    console.log(queryResult);
+    
+    if (queryResult.length <= 0 ) {
+      throw("NO_DATA")
+    }
+    res.json(queryResult);
+  } catch (error) {
+      if (error == "NO_DATA") {
+        res.json({error: "NO DATA"});
+        next();
+      }
+      else 
+        res.json({error: "Some error"});
+  }
+
 
   });
 
@@ -32,20 +47,14 @@ router.post('/createUser',
     const user: CustomerModel = req.body;
     const query = 'INSERT INTO customers (username, email, firstname, lastname, password) VALUES (?, ?, ?, ?, ?)';
     
-    executeGetQuery(query, [user.username, user.email, user.firstname, user.lastname, user.password])
+    await executeGETQuery(query, [user.username, user.email, user.firstname, user.lastname, user.password])
       .then((result) => {
-        console.log("Result from DB: ", result);
+        console.log("Result from DB: ", result.affectedRows);
         res.send("User created successfully"); //This is a WIP, 
       })
       .catch((error) => {
-        if (error === "NO_DATA") {
-          console.log(error);
-          res.send("NO DATA ERROR");
-        }
-        else {
           console.log(error);
           res.send("UNSPECIFIED ERROR");
-        }
       });
   });
 
@@ -61,7 +70,7 @@ router.post('/loginUser',
       //Query definition
       const query = 'SELECT * FROM CUSTOMERS WHERE USERNAME = ? AND PASSWORD = ?';
       //Exe Query
-      const resultOfQuery:CustomerModel[] = await executeGetQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
+      const resultOfQuery:CustomerModel[] = await executeGETQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
       
       //If successful find of customer, return
       if (resultOfQuery.length >= 1) {

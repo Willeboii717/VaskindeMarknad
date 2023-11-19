@@ -1,6 +1,6 @@
 import pool from './db';
 
-export function executeGetQuery(query: string, params: any[] = []): Promise<any> {
+export function executeGETQuery(query: string, params: any[] = []): Promise<any> {
 
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => { //getConnection from db.ts to connect to database
@@ -14,17 +14,20 @@ export function executeGetQuery(query: string, params: any[] = []): Promise<any>
         if (queryError) {
           return reject(queryError); //If queryerror, reject
         }
-        console.log(results);
         
-        if (results && results.length > 0) { //check for length, if more than 0, db returned data, resolve
+        if (query.trim().toLowerCase().startsWith("insert")) { // Bad solution? Need to discuss
+          console.log("Insert statement");
+          resolve({ success: true, affectedRows: results.affectedRows });
+        }
+        else if (results && results.length > 0) { //check for length, if more than 0, db returned data, resolve
           resolve(results.length === 1 ? results[0] : results); //if 
         } 
         else {
-          console.log(typeof results, results);
-          reject(reason? "NO_DATA"); //Think Jocke fixed, will chaosTest
+          resolve(results);
         }
       });
     });
   });
 }
-//Could be useful to look at RowDataPacket or OkPacket instead, RowDataPacket if data, OKpacket if insert... maybe
+
+//Could be useful to look at RowDataPacket or OkPacket instead, RowDataPacket if data, OKpacket if insert... 
