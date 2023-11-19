@@ -73,7 +73,7 @@ router.get('/loginUser',
       //Exe Query
       const resultOfQuery:CustomerModel[] = await executeGETQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
       
-      if (Object.keys(resultOfQuery).length >= 1) {  //If successful find of customer, return
+      if (Object.keys(resultOfQuery).length >= 1) {  //If successful find of customer, IE DB returned one or more rows return
         res.status(201).send({msg: "Customer Authenticated"});
         console.log("[server]: GET Success, Customer Authenticated");
       }
