@@ -40,7 +40,7 @@ async (req: Request, res: Response, next: NextFunction) => {
 router.post('/createUser',
   createCustomerValidator, // determines what should be validated
   runValidator, // runs validator on body
-  
+
   checkIfUserExists,   // Checks if users exist
   async (req: Request, res: Response, next: NextFunction) => {
     console.log("[server]: entering Post, createCustomer");
@@ -61,11 +61,11 @@ router.post('/createUser',
 
 
 
-router.post('/loginUser',
+router.get('/loginUser',
   loginValidator,
   runValidator,
   async (req: Request, res: Response) => {
-    console.log("[server]: entering Post, loginCustomer ", req.body);
+    console.log("[server]: entering GET, loginCustomer ", req.body);
     const frontEndDataUser:loginCredentialModel = req.body;
     try {
       //Query definition
@@ -73,19 +73,18 @@ router.post('/loginUser',
       //Exe Query
       const resultOfQuery:CustomerModel[] = await executeGETQuery(query, [frontEndDataUser.username, frontEndDataUser.password])
       
-      //If successful find of customer, return
-      if (resultOfQuery.length >= 1) {
+      if (Object.keys(resultOfQuery).length >= 1) {  //If successful find of customer, return
         res.status(201).send({msg: "Customer Authenticated"});
-        console.log("[server]: Post Success, Customer Authenticated");
+        console.log("[server]: GET Success, Customer Authenticated");
       }
-      else {
+      else { //If not any db errors, but no data returned
         const resError: httpErrorModel = {
           code: 'CREDENTIALS_MISMATCHED',
           message: 'Credentials mismatch',
           status: 401,
         };
-        res.status(resError.status).json({ error: resError.code, message: resError.message });
-        console.log("[server]: POST Failure, Credentials mismatch");
+        res.status(resError.status).json(resError);
+        console.log("[server]: GET Failure, Credentials mismatch");
       }
     }    
     // Handle any database errors
@@ -95,8 +94,8 @@ router.post('/loginUser',
           message: 'Error in database, not Authenticated',
           status: 500,
         };
-        res.status(resError.status).json({ error: resError.code, message: resError.message });
-        console.log("[server]: POST Failure, Database Error");
+        res.status(resError.status).json(resError);
+        console.log("[server]: GET Failure, Database Error");
       }
 });
 

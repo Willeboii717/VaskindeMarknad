@@ -12,12 +12,12 @@ export async function checkIfUserExists(req: Request, res: Response, next: NextF
       const  resultOfQuery = await executeGETQuery(query, [customer.username]);
 
       if ( Object.keys(resultOfQuery).length > 0 ) {
-        const error:httpErrorModel = {
+        const resRrror: httpErrorModel = {
           code: 'USER_ALREADY_EXISTS',
           message: 'User already exists',
           status: 409,
         }
-        res.status(error.status).json(error).end();
+        res.status(resRrror.status).json(resRrror).end();
       }
       else {
         next();
