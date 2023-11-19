@@ -9,20 +9,18 @@ export async function checkIfUserExists(req: Request, res: Response, next: NextF
     const query = "SELECT * FROM CUSTOMERS WHERE username = ?";
     try {
       console.log("awaiting executeGETQuery with: ", query, customer.username);
-      const resultOfQuery = await executeGETQuery(query, [customer.username]);
-      console.log(resultOfQuery);
-      
-      if ( resultOfQuery.length > 0 ) {
-        res.status(409).json({
-          httpErrorModel: {
-            code: 'USER_ALREADY_EXISTS',
-            message: 'User already exists',
-            status: 409,
-          },
-        });
+      const  resultOfQuery = await executeGETQuery(query, [customer.username]);
+
+      if ( Object.keys(resultOfQuery).length > 0 ) {
+        const error:httpErrorModel = {
+          code: 'USER_ALREADY_EXISTS',
+          message: 'User already exists',
+          status: 409,
+        }
+        res.status(error.status).json(error).end();
       }
       else {
-        next()
+        next();
       }
     } catch(error) {
         console.log(error);       

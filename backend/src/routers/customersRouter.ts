@@ -40,8 +40,9 @@ async (req: Request, res: Response, next: NextFunction) => {
 router.post('/createUser',
   createCustomerValidator, // determines what should be validated
   runValidator, // runs validator on body
-    checkIfUserExists, // Checks if users exist
-  async (req: Request, res: Response) => {
+  
+  checkIfUserExists,   // Checks if users exist
+  async (req: Request, res: Response, next: NextFunction) => {
     console.log("[server]: entering Post, createCustomer");
     // Placing body in User interface
     const user: CustomerModel = req.body;
@@ -50,7 +51,7 @@ router.post('/createUser',
     await executeGETQuery(query, [user.username, user.email, user.firstname, user.lastname, user.password])
       .then((result) => {
         console.log("Result from DB: ", result.affectedRows);
-        res.send("User created successfully"); //This is a WIP, 
+        res.send("User created successfully").end(); //This is a WIP, 
       })
       .catch((error) => {
           console.log(error);
